@@ -81,8 +81,34 @@ Faça o download dos arquivos do projeto para o seu computador.
         Power BI para Análise de Dados · Turma JAN/2024 - Microsoft Power BI
     """
     ```
+### Passo 3: Configurar a Organização Emissora Padrão
 
-### Passo 3: Iniciar o Google Chrome em Modo de Depuração
+**Atenção:** O script está pré-configurado para preencher "Enap" como a organização emissora para **todos** os certificados. Se seus certificados forem de outra instituição (como SENASP, SEST SENAT, UFPB, etc.), você precisa alterar isso diretamente no código.
+
+1.  Abra o script principal (`automacao_linkedin.py`).
+2.  Procure pela linha que contém `campo_org.send_keys("Enap")`.
+3.  Altere o texto `"Enap"` para o nome da sua instituição.
+
+    **Local no código para alteração:**
+    ```python
+    # ... (dentro do loop 'for i, cert in enumerate(certificados):')
+
+          campo_org = wait.until(EC.visibility_of_element_located((By.XPATH, "//input[@placeholder='Ex.: Microsoft']")))
+          
+          # ----------------------------------------------------------------- #
+          # --- ALTERE A LINHA ABAIXO COM O NOME DA SUA INSTITUIÇÃO --- #
+          campo_org.send_keys("Enap") 
+          # ----------------------------------------------------------------- #
+
+          time.sleep(2.5)
+          campo_org.send_keys(Keys.ARROW_DOWN)
+    ```
+    Por exemplo, se seus cursos foram na **SEST SENAT**, a linha ficaria assim:
+    ```python
+    campo_org.send_keys("SEST SENAT")
+    ```
+
+### Passo 4: Iniciar o Google Chrome em Modo de Depuração
 
 Esta é a etapa mais importante. O script **não fará login por você**. Em vez disso, ele se conectará a um navegador que você já abriu e onde já está logado.
 
@@ -108,7 +134,7 @@ Esta é a etapa mais importante. O script **não fará login por você**. Em vez
 
 4.  Uma nova janela do Chrome será aberta. Nesta janela, **faça login no seu perfil do LinkedIn** normalmente.
 
-### Passo 4: Atualizar a URL do Perfil no Script (Opcional)
+### Passo 5: Atualizar a URL do Perfil no Script (Opcional)
 
 O script principal (`automacao_linkedin.py`) possui uma variável `PROFILE_URL`. Se desejar, atualize-a para a URL do seu próprio perfil, embora o script navegue diretamente para a página de adição.
 
@@ -117,7 +143,7 @@ O script principal (`automacao_linkedin.py`) possui uma variável `PROFILE_URL`.
 PROFILE_URL = "[https://www.linkedin.com/in/seu-usuario-aqui/](https://www.linkedin.com/in/seu-usuario-aqui/)"
 ```
 
-### Passo 5: Executar o Script de Automação
+### Passo 6: Executar o Script de Automação
 
 1.  Com o Chrome em modo de depuração aberto e logado no LinkedIn, abra um **novo** terminal ou prompt de comando.
 2.  Navegue até a pasta onde você salvou os arquivos do projeto.
